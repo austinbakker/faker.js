@@ -10,12 +10,7 @@
     "url": "http://github.com/Marak/Faker.js.git"
   },
   "scripts": {
-    "browser": "./node_modules/.bin/gulp browser",
-    "jsdoc": "./node_modules/.bin/gulp jsdoc",
-    "readme": "./node_modules/.bin/gulp readme",
-    "lint": "node_modules/.bin/jshint ./lib --config ./.jshintrc",
-    "test": "node_modules/.bin/mocha test/*.*.js",
-    "coverage": "nyc report --reporter=text-lcov | coveralls"
+    "build": "tsc"
   },
   "nyc": {
     "all": false,
@@ -67,5 +62,7 @@
   },
   "license": "MIT",
   "main": "index.js",
-  "dependencies": {}
+  "dependencies": {
+    "typescript": "^4.1.3"
+  }
 }

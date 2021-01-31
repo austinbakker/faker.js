@@ -1,70 +1,59 @@
-import { Random } from "./index";
-const Helpers = {
-    randomize: function(array:[]) {
-        array = array || ["a", "b", "c"];
-        return Random.arrayElement(array);
-    },
-    /**
-     * Returns the average of two numbers.
-     *
-     * @remarks
-     * slugifies string
-     */
-    slugify: function (string:string) {
-        string = string || "";
-        return string.replace(/ /g, '-').replace(/[^\w\.\-]+/g, '');
-    },
+/**
+ *
+ * @namespace faker.helpers
+ */
+var Helpers = function (faker) {
 
-    /**
-     * @remarks
-     * parses string for a symbol and replace it with a random number from 1-10
-     *
-     * @param {string} string
-     * @param {string} symbol defaults to `"#"`
-     */
-    replaceSymbolWithNumber: function (string:string, symbol:string) {
-        string = string || "";
-        // default symbol is '#'
-        if (symbol === undefined) {
-            symbol = '#';
-        }
-  
-        var str = '';
-        for (var i = 0; i < string.length; i++) {
-            if (string.charAt(i) == symbol) {
-                str += faker.random.number(9);
-            } else if (string.charAt(i) == "!"){
-                str += faker.random.number({min: 2, max: 9});
-            } else {
-                str += string.charAt(i);
-            }
-        }
-        return str;
-    },
-    replaceSymbols: function (string:string) {
-        string = string || "";
-        var alpha = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z']
-        var str = '';
-  
-        for (var i = 0; i < string.length; i++) {
-            if (string.charAt(i) == "#") {
-                str += Random.number(9);
-            } else if (string.charAt(i) == "?") {
-                str += Random.arrayElement(alpha);
-            } else if (string.charAt(i) == "*") {
-              str += Random.boolean() ? Random.arrayElement(alpha) : Random.number(9);
-            } else {
-                str += string.charAt(i);
-            }
-        }
-        return str;
-    };
+  var self = this;
 
-}
-export default Helpers
+  /**
+   * backward-compatibility
+   *
+   * @method faker.helpers.randomize
+   * @param {array} array
+   */
+  self.randomize = function (array) {
+      array = array || ["a", "b", "c"];
+      return faker.random.arrayElement(array);
+  };
 
+  /**
+   * slugifies string
+   *
+   * @method faker.helpers.slugify
+   * @param {string} string
+   */
+  self.slugify = function (string) {
+      string = string || "";
+      return string.replace(/ /g, '-').replace(/[^\w\.\-]+/g, '');
+  };
 
+  /**
+   * parses string for a symbol and replace it with a random number from 1-10
+   *
+   * @method faker.helpers.replaceSymbolWithNumber
+   * @param {string} string
+   * @param {string} symbol defaults to `"#"`
+   */
+  self.replaceSymbolWithNumber = function (string, symbol) {
+      string = string || "";
+      // default symbol is '#'
+      if (symbol === undefined) {
+          symbol = '#';
+      }
 
+      var str = '';
+      for (var i = 0; i < string.length; i++) {
+          if (string.charAt(i) == symbol) {
+              str += faker.random.number(9);
+          } else if (string.charAt(i) == "!"){
+              str += faker.random.number({min: 2, max: 9});
+          } else {
+              str += string.charAt(i);
+          }
+      }
+      return str;
+  };
 
   /**
    * parses string for symbols (numbers or letters) and replaces them appropriately (# will be replaced with number,
@@ -73,7 +62,24 @@ export default Helpers
    * @method faker.helpers.replaceSymbols
    * @param {string} string
    */
-  self.
+  self.replaceSymbols = function (string) {
+      string = string || "";
+      var alpha = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z']
+      var str = '';
+
+      for (var i = 0; i < string.length; i++) {
+          if (string.charAt(i) == "#") {
+              str += faker.random.number(9);
+          } else if (string.charAt(i) == "?") {
+              str += faker.random.arrayElement(alpha);
+          } else if (string.charAt(i) == "*") {
+            str += faker.random.boolean() ? faker.random.arrayElement(alpha) : faker.random.number(9);
+          } else {
+              str += string.charAt(i);
+          }
+      }
+      return str;
+  };
 
   /**
    * replace symbols in a credit card schems including Luhn checksum
